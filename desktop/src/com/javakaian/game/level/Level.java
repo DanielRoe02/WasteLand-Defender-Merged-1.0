@@ -40,28 +40,59 @@ public class Level {
 
     private int timeLeft;
     private boolean renderTimeAndWaveNumber = false;
-    private int waveNumber;
+    private int waveNumber = 1;
     private boolean showWinMessage = false;
     private float winMessageTimer = 0;
 
-    private final int maxWaves = 1; // or any number you want
+    private int maxWaves; // or any number you want
 
 
-    public Level(PlayState state) {
+    private final int levelNumber;
+
+    public Level(PlayState state, int levelNumber) {
         this.state = state;
+        this.levelNumber = levelNumber;
         this.bitmapFont = GameUtils.generateBitmapFont(80, Color.BLACK);
-        init();
+        init(levelNumber);// 👈 internally use levelNumber
     }
 
-    private void init() {
-        waveNumber = 1;
+    public int getLevelNumber() {
+        return levelNumber;
+    }
+
+
+    public void init(int levelNumber) {
+        switch (levelNumber) {
+            case 1:
+                maxWaves = 1;
+                enemyNumber = 5;
+                enemyHealth = 100;
+                remainingHealth = 5;
+                break;
+            case 2:
+                maxWaves = 2;
+                enemyNumber = 10;
+                enemyHealth = 400;
+                remainingHealth = 5;
+                break;
+            case 3:
+                maxWaves = 1;
+                enemyNumber = 1;
+                enemyHealth = 50000;
+                remainingHealth = 1;
+                break;
+            default:
+                maxWaves = 1;
+                enemyNumber = 10;
+                enemyHealth = 100;
+                break;
+        }
+
         score = 0;
         money = GameConstants.INITIAL_MONEY;
-        enemyNumber = 10;
-        enemyHealth = 200;
-        remainingHealth = GameConstants.REMAINING_HEALTH;
 
-        map = new Map();
+
+        map = new Map(levelNumber);
         enemyController = new EnemyController(this);
         towerController = new TowerController();
         informationMenu = new InformationMenu(MyAtlas.MENU_TILE);
@@ -150,8 +181,9 @@ public class Level {
         informationMenu.fireScoreChanged(this.score);
         towerSelectionMenu.fireEnemyNumberChanged(enemyNumber);
 
-        // ✅ Now this logic will work
-        if (waveNumber > maxWaves && enemyNumber <= 0) {
+        // Win condition
+        if (waveNumber >= maxWaves && enemyNumber <= 0)
+        {
             MusicHandler.stopBackgroundMusic();
             MusicHandler.WaveClearMusic();
             System.out.println("All enemies defeated. Transforming land...");
@@ -174,18 +206,16 @@ public class Level {
     }
 
     public void newWaveCreated(int size) {
-        waveNumber++;
-
-        if (waveNumber > maxWaves) {
-            // 🚫 Do NOT call gameWin() here yet
-            enemyNumber = size; // Set remaining enemies
+        if (waveNumber >= maxWaves) {
             renderTimeAndWaveNumber = false;
             return;
         }
 
+        waveNumber++;
         enemyNumber = size;
         renderTimeAndWaveNumber = false;
     }
+
 
     public void showCuredPollutionMessage() {
         this.showWinMessage = true;
@@ -294,7 +324,7 @@ public class Level {
     }
 
     public void restart() {
-        init();
+        init(levelNumber);
     }
 
     public void pause() {

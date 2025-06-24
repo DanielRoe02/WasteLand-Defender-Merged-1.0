@@ -14,13 +14,12 @@ public class Map {
     private final LinkedList<Direction> directionList;
     private final Board board;
 
-    public Map() {
-
-        final MapMaker mapMaker = new MapMaker();
+    public Map(int levelNumber) {
+        final MapMaker mapMaker = new MapMaker(levelNumber);
 
         directionList = mapMaker.getDirectionList();
         Set<Vector2> pathPoints = mapMaker.getPathPoints();
-        board = new Board(pathPoints);
+        board = new Board(pathPoints, levelNumber); // 👈 optional, if Board varies
     }
 
     public void transformToGrasslandAnimated() {

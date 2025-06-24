@@ -96,7 +96,7 @@ public class LevelSelectState extends State {
         btnLevel2.setButtonListener((event, x, y) -> {
             if (event == OButtonListener.TouchEvent.RELEASE) {
                 getStateController().setSelectedLevel(2);
-                getStateController().setState(StateEnum.PlayState);
+                getStateController().setState(new PlayState(getStateController(), 2));
                 MusicHandler.playBackgroundMusic();
                 MusicHandler.stopMenuMusic();
             }
@@ -105,7 +105,7 @@ public class LevelSelectState extends State {
         btnLevel3.setButtonListener((event, x, y) -> {
             if (event == OButtonListener.TouchEvent.RELEASE) {
                 getStateController().setSelectedLevel(3);
-                getStateController().setState(StateEnum.PlayState);
+                getStateController().setState(new PlayState(getStateController(), 3));
                 MusicHandler.playBackgroundMusic();
                 MusicHandler.stopMenuMusic();
             }

@@ -111,11 +111,19 @@ public class GameWinState extends State {
 
     private void setListeners() {
         btnNextLevel.setButtonListener((event, x, y) -> {
+//            if(newLevel == 3){
+//
+//            }
             if (event == OButtonListener.TouchEvent.RELEASE) {
-                getStateController().setState(StateEnum.PlayState); // Update to Level2 if needed
-                MusicHandler.playBackgroundMusic();
+                // Increment to the next level
+                stateController.incrementLevel();
+
+                // Start the new level immediately
+                int newLevel = stateController.getCurrentLevel();
+                stateController.setState(new PlayState(stateController, newLevel));
             }
         });
+
 
         btnReplay.setButtonListener((event, x, y) -> {
             if (event == OButtonListener.TouchEvent.RELEASE) {

@@ -34,22 +34,24 @@ public class EnemyController {
     private int enemySpeed = GameConstants.ENEMY_SPEED;
 
     private final List<Bounty> bountyList;
+    private int levelNumber;
 
     public EnemyController(Level level) {
-
         this.level = level;
+        this.levelNumber = level.getLevelNumber();
         Map map = level.getMap();
         this.directionList = map.getDirectionList();
         this.health = level.getEnemyHealth();
         this.enemyNumberLimit = level.getEnemyNumber();
 
-        count = level.getEnemyNumber();
+        count = 0;
         enemyList = new ArrayList<>();
         bountyList = new ArrayList<>();
 
         this.bounty = GameConstants.ENEMY_BOUNTY;
         this.spawnPeriod = GameConstants.ENEMY_SPAWN_PERIOD;
     }
+
 
     public void render(SpriteBatch sb) {
 
@@ -85,18 +87,43 @@ public class EnemyController {
         spawnTime += Gdx.graphics.getDeltaTime();
         if (spawnTime >= spawnPeriod) {
             spawnTime = 0;
-            if (count < enemyNumberLimit) {
-                Vector2 p = new Vector2(0, 0);
-                enemyList.add(new Enemy(
-                        p.x - GameConstants.GRID_WIDTH + (GameConstants.GRID_WIDTH / 2 - GameConstants.ENEMY_WIDTH / 2),
-                        p.y + GameConstants.GRID_HEIGHT
-                                + (GameConstants.GRID_HEIGHT / 2 - GameConstants.ENEMY_HEIGHT / 2),
-                        GameConstants.ENEMY_WIDTH, GameConstants.ENEMY_HEIGHT, health, directionList, bounty,
-                        enemySpeed));
-                count++;
-            } else {
+            if (levelNumber == 3) {
+                if (count < enemyNumberLimit) {
+                    Vector2 p = new Vector2(0, 0);
+                    float startX = p.x + GameConstants.GRID_WIDTH / 2f - GameConstants.BOSS_WIDTH / 2f;
+                    float startY = p.y + GameConstants.GRID_HEIGHT / 2f - GameConstants.BOSS_HEIGHT / 2f;
 
-                isWaveCompleted();
+                    enemyList.add(new Enemy(
+                            startX,
+                            startY,
+                            GameConstants.BOSS_WIDTH,
+                            GameConstants.BOSS_HEIGHT,
+                            health,
+                            directionList,
+                            bounty,
+                            enemySpeed,
+                            level.getLevelNumber()
+                    ));
+                    count++;
+                } else {
+                    isWaveCompleted();
+                }
+            }
+
+            else{
+                if (count < enemyNumberLimit) {
+                    Vector2 p = new Vector2(0, 0);
+                    enemyList.add(new Enemy(
+                            p.x - GameConstants.GRID_WIDTH + (GameConstants.GRID_WIDTH / 2 - GameConstants.ENEMY_WIDTH / 2),
+                            p.y + GameConstants.GRID_HEIGHT
+                                    + (GameConstants.GRID_HEIGHT / 2 - GameConstants.ENEMY_HEIGHT / 2),
+                            GameConstants.ENEMY_WIDTH, GameConstants.ENEMY_HEIGHT, health, directionList, bounty,
+                            enemySpeed, level.getLevelNumber()));
+                    count++;
+                } else {
+
+                    isWaveCompleted();
+                }
             }
         }
 

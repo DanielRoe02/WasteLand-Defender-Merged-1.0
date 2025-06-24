@@ -19,6 +19,8 @@ public class GameConstants {
 
 	public static float ENEMY_WIDTH = GRID_WIDTH * 1f;
 	public static float ENEMY_HEIGHT = GRID_HEIGHT * 1f;
+	public static float BOSS_WIDTH = GRID_WIDTH * 4f;
+	public static float BOSS_HEIGHT = GRID_HEIGHT * 4f;
 	public static float COIN_WIDTH = GRID_WIDTH * 0.5f;
 	public static float COIN_HEIGHT = GRID_HEIGHT * 0.5f;
 	public static float ENEMY_HEALTHBAR_WIDTH = GRID_WIDTH * 0.9f;

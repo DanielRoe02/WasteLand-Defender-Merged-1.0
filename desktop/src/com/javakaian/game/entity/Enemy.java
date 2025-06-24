@@ -24,15 +24,24 @@ public class Enemy extends GameObject {
     private boolean slowed = false;
 
     private final HealthBar healthBar;
+    private int levelNumber;
+
 
     public Enemy(float x, float y, float width, float height, float health, LinkedList<Direction> directionList,
-                 int bounty, int speed) {
+                 int bounty, int speed, int levelNumber) {
         super(x, y, width, height);
+        this.levelNumber = levelNumber;
         this.speed = speed;
         this.directionList = new LinkedList<>(directionList);
         this.remainingHealth = health;
         this.bounty = bounty;
-        this.sprite = MyAtlas.ENEMY;
+        if(levelNumber == 3){
+            this.sprite = MyAtlas.BOSS;
+        }
+        else{
+            this.sprite = MyAtlas.ENEMY;
+        }
+
         getNextDirection();
 
         healthBar = new HealthBar(x, y - GameConstants.ENEMY_HEALTHBAR_OFFSET_Y,

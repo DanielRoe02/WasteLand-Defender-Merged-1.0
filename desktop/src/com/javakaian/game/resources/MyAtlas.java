@@ -15,6 +15,7 @@ public class MyAtlas {
     public static Sprite LAND_TILE;
 
     public static Sprite ENEMY;
+    public static Sprite BOSS;
     public static Sprite ENEMY_SLOWED;
 
     public static Sprite FIRE_TOWER;
@@ -72,6 +73,8 @@ public class MyAtlas {
 
 
         ENEMY = createSprite(atlas.findRegion("enemy"));
+        BOSS = new Sprite(new Texture(Gdx.files.internal("img/boss.png")));
+        BOSS.flip(false, true);
         ENEMY_SLOWED = createSprite(atlas.findRegion("enemy_slowed"));
         FIRE_TOWER = createSprite(atlas.findRegion("fire_plane"));
         ELECTRIC_TOWER = createSprite(atlas.findRegion("electric_tower"));

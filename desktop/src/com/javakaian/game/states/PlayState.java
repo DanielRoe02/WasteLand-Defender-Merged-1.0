@@ -12,9 +12,12 @@ public class PlayState extends State {
     private final Level level;
     private boolean paused = false;
 
-    public PlayState(StateController stateController) {
+    private final int levelNumber;
+
+    public PlayState(StateController stateController, int levelNumber) {
         super(stateController);
-        level = new Level(this);
+        this.levelNumber = levelNumber;
+        this.level = new Level(this, levelNumber); // 👈 pass levelNumber
     }
 
     @Override

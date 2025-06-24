@@ -18,12 +18,22 @@ public class Board {
 
     private boolean render = false;
 
-    public Board(Set<Vector2> pathPoints) {
+    public Board(Set<Vector2> pathPoints, int levelNumber) {
         this.pathPoints = pathPoints;
         gridList = new ArrayList<>();
-        createGridList();
+
+        if (levelNumber == 2) {
+            createGridList_lvl2();
+        }
+        else if (levelNumber == 3) {
+            createGridList_lvl3();
+        }else {
+            createGridList();
+        }
     }
 
+
+    // Add Grid manually
     private void createGridList() {
         float gridWidth = GameConstants.GRID_WIDTH;
         float gridHeight = GameConstants.GRID_HEIGHT;
@@ -57,6 +67,119 @@ public class Board {
             }
         }
     }
+
+    private void createGridList_lvl2() {
+        float gridWidth = GameConstants.GRID_WIDTH;
+        float gridHeight = GameConstants.GRID_HEIGHT;
+        float gridX, gridY;
+
+        for (int i = 0; i < GameConstants.MAP_ROW_SIZE; i++) {
+            for (int j = 0; j < GameConstants.COLUMN_SIZE; j++) {
+                gridX = j * gridWidth;
+                gridY = i * gridHeight + GameConstants.GRID_HEIGHT;
+
+                Vector2 pos = new Vector2(i, j);
+                EnumGridType type;
+
+                if (pathPoints.contains(pos)) {
+                    type = EnumGridType.PATH;
+                }
+                // Manually place TOXIC tiles
+                else if ((i == 1 && j == 0)) {
+                    type = EnumGridType.TOXIC;
+                }
+                else if ((i == 2 && j == 1)) {
+                    type = EnumGridType.TOXIC;
+                }
+                else if ((i == 3 && j == 0)) {
+                    type = EnumGridType.TOXIC;
+                }
+                else if ((i == 4 && j == 1)) {
+                    type = EnumGridType.TOXIC;
+                }
+                else if ((i == 5 && j == 0)) {
+                    type = EnumGridType.TOXIC;
+                }
+                // Manually place WATER tiles
+                else if (((i >= 4 && i <= 5) && (j >= 7 && j <= 15)) ) {
+                    type = EnumGridType.POLLWATER;
+                }
+                else if (((i >= 0 && i <= 1) && (j >= 10 && j <= 15)) ) {
+                    type = EnumGridType.POLLWATER;
+                }
+                // Default to LAND
+                else {
+                    type = EnumGridType.LAND;
+                }
+
+                gridList.add(new Grid(gridX, gridY, gridWidth, gridHeight, type));
+            }
+        }
+    }
+
+    private void createGridList_lvl3() {
+        float gridWidth = GameConstants.GRID_WIDTH;
+        float gridHeight = GameConstants.GRID_HEIGHT;
+        float gridX, gridY;
+
+        for (int i = 0; i < GameConstants.MAP_ROW_SIZE; i++) {
+            for (int j = 0; j < GameConstants.COLUMN_SIZE; j++) {
+                gridX = j * gridWidth;
+                gridY = i * gridHeight + GameConstants.GRID_HEIGHT;
+
+                Vector2 pos = new Vector2(i, j);
+                EnumGridType type;
+
+                if (pathPoints.contains(pos)) {
+                    type = EnumGridType.PATH;
+                }
+                // Manually place TOXIC tiles
+                else if ((i == 1 && j == 0)) {
+                    type = EnumGridType.TOXIC;
+                }
+                else if ((i == 3 && j == 0)) {
+                    type = EnumGridType.TOXIC;
+                }
+                else if ((i == 5 && j == 0)) {
+                    type = EnumGridType.TOXIC;
+                }
+                //
+                else if ((i == 1 && j == 2)) {
+                    type = EnumGridType.TOXIC;
+                }
+                else if ((i == 3 && j == 2)) {
+                    type = EnumGridType.TOXIC;
+                }
+                else if ((i == 5 && j == 2)) {
+                    type = EnumGridType.TOXIC;
+                }
+                else if ((i == 1 && j == 4)) {
+                    type = EnumGridType.TOXIC;
+                }
+                else if ((i == 3 && j == 4)) {
+                    type = EnumGridType.TOXIC;
+                }
+                else if ((i == 5 && j == 4)) {
+                    type = EnumGridType.TOXIC;
+                }
+
+                // Manually place WATER tiles
+                else if (((i >= 2 && i <= 3) && (j >= 7 && j <= 15)) ) {
+                    type = EnumGridType.POLLWATER;
+                }
+                else if (((i >= 0 && i <= 1) && (j >= 0 && j <= 15)) ) {
+                    type = EnumGridType.POLLWATER;
+                }
+                // Default to LAND
+                else {
+                    type = EnumGridType.LAND;
+                }
+
+                gridList.add(new Grid(gridX, gridY, gridWidth, gridHeight, type));
+            }
+        }
+    }
+
 
 
     public void transformToGrasslandAnimated() {

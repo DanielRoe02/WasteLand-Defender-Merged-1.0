@@ -21,6 +21,23 @@ public class StateController extends InputAdapter {
     private State previousState;
     private int selectedLevel = 1;
 
+    private int currentLevel = 1;
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void setCurrentLevel(int level) {
+        this.currentLevel = level;
+    }
+
+    public void incrementLevel() {
+        if (currentLevel < 3) { // cap at level 3
+            currentLevel++;
+        }
+    }
+
+
     public StateController() {
         stateMap = new HashMap<>();
         Gdx.input.setInputProcessor(this);
@@ -99,7 +116,7 @@ public class StateController extends InputAdapter {
     private State createState(StateEnum stateEnum) {
         switch (stateEnum) {
             case PlayState:
-                return new PlayState(this);
+                return new PlayState(this, 1); // 👈 default to level 1
             case GameWinState:
                 return new GameWinState(this);
             case GameOverState:

@@ -64,7 +64,7 @@ public class PauseState extends State {
     private void initButtons() {
         final ButtonFactory bf = new ButtonFactory(GameConstants.GRID_WIDTH * 1.5f,
                 GameConstants.GRID_HEIGHT * 1.5f);
-        btnRestart = bf.createOButton(MyAtlas.RESTART_GAME);
+        btnRestart = bf.createOButton(MyAtlas.MENU_BUTTON);
         btnResume = bf.createOButton(MyAtlas.RESUME_GAME);
         btnOptions = bf.createOButton("Options", MyAtlas.GENERIC_BUTTON, true);
 
@@ -108,7 +108,7 @@ public class PauseState extends State {
         btnRestart.setButtonListener((event, x, y) -> {
             if (event == OButtonListener.TouchEvent.RELEASE) {
                 PlayState state = (PlayState) getStateController().getState(StateEnum.PlayState);
-                getStateController().setState(StateEnum.PlayState);
+                getStateController().setState(StateEnum.MenuState);
                 state.restart();
             }
         });

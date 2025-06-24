@@ -16,11 +16,16 @@ public class MapMaker {
     private final Set<Vector2> pathPoints;
     private final LinkedList<Direction> directionList;
 
-    public MapMaker() {
-
+    public MapMaker(int levelNumber) {
         directionList = new LinkedList<>();
         pathPoints = new HashSet<>();
-        initialize();
+        if (levelNumber == 2) {
+            initialize_lvl2();}
+        else if (levelNumber == 3){
+            initialize_lvl3();}
+        else {
+            initialize(); // Level 1
+        }
     }
 //// These code for random path
 //    public void initialize() {
@@ -76,6 +81,136 @@ public void initialize() {
         directionList.add(0, Direction.RIGHT);
         directionList.add(directionList.get(directionList.size() - 1));
 }
+
+    public void initialize_lvl2() {
+        columnSize = GameConstants.COLUMN_SIZE;
+        rowSize = GameConstants.MAP_ROW_SIZE;
+        matrix = new int[rowSize][columnSize];
+        int row = 0, col = 0;
+        // 1. Right 2 tiles
+        for (int i = 0; i < 2; i++) {
+            matrix[row][col] = 1;
+            col++;
+        }
+        // 2. Down 5 tiles
+        for (int i = 0; i < 5; i++) {
+            matrix[row][col] = 1;
+            row++;
+        }
+        // 3. Right 3 tiles
+        for (int i = 0; i < 3; i++) {
+            matrix[row][col] = 1;
+            col++;
+        }
+        // 4. Up 5 tiles
+        for (int i = 0; i < 5; i++) {
+            matrix[row][col] = 1;
+            row--;
+        }
+        // 5. Right 3 tiles
+        for (int i = 0; i < 3; i++) {
+            matrix[row][col] = 1;
+            col++;
+        }
+        // 6. Down 3 tiles
+        for (int i = 0; i < 3; i++) {
+            matrix[row][col] = 1;
+            row++;
+        }
+        // 5. Right until the end
+        while (col < columnSize && row < rowSize) {
+            matrix[row][col] = 1;
+            col++;
+        }
+
+        loadPathPoints();
+        loadDirectionList(0, 0); // starting tile: row 0, column 0
+
+        // Add extra direction to let enemies exit the screen
+        directionList.add(0, Direction.RIGHT);
+        directionList.add(directionList.get(directionList.size() - 1));
+    }
+
+    public void initialize_lvl3() {
+        columnSize = GameConstants.COLUMN_SIZE;
+        rowSize = GameConstants.MAP_ROW_SIZE;
+        matrix = new int[rowSize][columnSize];
+        int row = 0, col = 0;
+        // 1. Right 1 tiles
+        for (int i = 0; i < 1; i++) {
+            matrix[row][col] = 1;
+            col++;
+        }
+        // 2. Down 5 tiles
+        for (int i = 0; i < 5; i++) {
+            matrix[row][col] = 1;
+            row++;
+        }
+        // 3. Right 2 tiles
+        for (int i = 0; i < 2; i++) {
+            matrix[row][col] = 1;
+            col++;
+        }
+        // 4. Up 5 tiles
+        for (int i = 0; i < 5; i++) {
+            matrix[row][col] = 1;
+            row--;
+        }
+        // 5. Right 2 tiles
+        for (int i = 0; i < 2; i++) {
+            matrix[row][col] = 1;
+            col++;
+        }
+        // 6. Down 3 tiles
+        for (int i = 0; i < 5; i++) {
+            matrix[row][col] = 1;
+            row++;
+        }
+        // 5. Right 2 tiles
+        for (int i = 0; i < 2; i++) {
+            matrix[row][col] = 1;
+            col++;
+        }
+        // 6. up 5 tiles
+        for (int i = 0; i < 5; i++) {
+            matrix[row][col] = 1;
+            row--;
+        }
+        // 5. Right 2 tiles
+        for (int i = 0; i < 2; i++) {
+            matrix[row][col] = 1;
+            col++;
+        }
+        // 6. Down 3 tiles
+        for (int i = 0; i < 5; i++) {
+            matrix[row][col] = 1;
+            row++;
+        }
+
+        // 5. Right 2 tiles
+        for (int i = 0; i < 2; i++) {
+            matrix[row][col] = 1;
+            col++;
+        }
+        // 6. up 5 tiles
+        for (int i = 0; i < 4; i++) {
+            matrix[row][col] = 1;
+            row--;
+        }
+        // 7. Right until the end
+        while (col < columnSize && row < rowSize) {
+            matrix[row][col] = 1;
+            col++;
+        }
+
+
+        loadPathPoints();
+        loadDirectionList(0, 0); // starting tile: row 0, column 0
+
+        // Add extra direction to let enemies exit the screen
+        directionList.add(0, Direction.RIGHT);
+        directionList.add(directionList.get(directionList.size() - 1));
+    }
 
 
 
